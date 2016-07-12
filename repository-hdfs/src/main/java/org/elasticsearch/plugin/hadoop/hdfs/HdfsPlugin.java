@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.elasticsearch.SpecialPermission;
 import org.elasticsearch.common.SuppressForbidden;
 import org.elasticsearch.common.io.FileSystemUtils;
 import org.elasticsearch.common.io.PathUtils;
@@ -113,12 +112,6 @@ public class HdfsPlugin extends Plugin {
     }
 
     private String getHadoopVersion(final ClassLoader hadoopCL) {
-        SecurityManager sm = System.getSecurityManager();
-        if (sm != null) {
-            // unprivileged code such as scripts do not have SpecialPermission
-            sm.checkPermission(new SpecialPermission());
-        }
-
         return AccessController.doPrivileged(new PrivilegedAction<String>() {
             @Override
             public String run() {
